@@ -3197,14 +3197,14 @@
     <div class="modal-overlay" id="autreFormatModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">×</button>
-            <h3 class="modal-title">Un projet <em>différent</em> ?</h3>
-            <p class="modal-subtitle">Journée complète, format hybride, activation multi-marques... Décrivez-nous votre vision, nous créons l'expérience qui vous ressemble.</p>
+            <h3 class="modal-title" data-i18n-html="modalOtherTitle">Un projet <em>différent</em> ?</h3>
+            <p class="modal-subtitle" data-i18n="modalOtherSubtitle">Journée complète, format hybride, activation multi-marques... Décrivez-nous votre vision, nous créons l'expérience qui vous ressemble.</p>
             <form class="modal-form" id="autreFormatForm">
-                <input type="text" class="modal-input" placeholder="Votre nom" required>
-                <input type="email" class="modal-input" placeholder="Votre email" required>
-                <input type="text" class="modal-input" placeholder="Votre agence / marque">
-                <textarea class="modal-input modal-textarea" placeholder="Décrivez votre projet idéal..."></textarea>
-                <button type="submit" class="modal-submit">Envoyer ma demande</button>
+                <input type="text" class="modal-input" placeholder="Votre nom" data-i18n-placeholder="modalNamePlaceholder" required>
+                <input type="email" class="modal-input" placeholder="Votre email" data-i18n-placeholder="modalEmailPlaceholder" required>
+                <input type="text" class="modal-input" placeholder="Votre agence / marque" data-i18n-placeholder="modalAgencyPlaceholder">
+                <textarea class="modal-input modal-textarea" placeholder="Décrivez votre projet idéal..." data-i18n-placeholder="modalProjectPlaceholder"></textarea>
+                <button type="submit" class="modal-submit" data-i18n="modalSubmitLabel">Envoyer ma demande</button>
             </form>
         </div>
     </div>
@@ -3664,14 +3664,16 @@
             window.open(calendlyUrl, '_blank', 'noopener');
 
             const submitBtn = modalForm.querySelector('.modal-submit');
+            const lang = document.documentElement.lang || currentLang || 'fr';
+            const t = (typeof translations !== 'undefined' && translations[lang]) ? translations[lang] : (translations && translations.fr ? translations.fr : null);
             if (submitBtn) {
-                submitBtn.textContent = '✓ Redirection vers Calendly...';
+                submitBtn.textContent = (t && t.modalSubmitRedirectLabel) ? t.modalSubmitRedirectLabel : '✓ Redirection vers Calendly...';
                 submitBtn.style.background = '#B8956B';
             }
             setTimeout(() => {
                 modal.classList.remove('active');
                 if (submitBtn) {
-                    submitBtn.textContent = 'Envoyer ma demande';
+                    submitBtn.textContent = (t && t.modalSubmitLabel) ? t.modalSubmitLabel : 'Envoyer ma demande';
                     submitBtn.style.background = '';
                 }
                 modalForm.reset();
@@ -3876,6 +3878,15 @@
                 vizDescExperience: "Déjeuner ou dîner exclusif sur la terrasse panoramique. Accueil champagne face à la mer, repas raffiné au bord de la piscine. Networking premium, contenus événementiels, souvenirs mémorables.",
                 vizDescDiner: "Dîner exclusif en terrasse face à la Méditerranée. Accueil champagne au bord de la piscine, table dressée sous les étoiles. Vos talents et invités VIP dans un cadre intimiste. Chaque moment est un contenu : arrivée, cocktail, table, conversations. Le format qui transforme un repas en campagne d'influence.",
                 vizDescMasterclass: "Workshop beauté ou lifestyle en terrasse avec un expert de votre marque. Vos talents apprennent, posent des questions, créent du contenu éducatif. Format intimiste qui génère de l'engagement authentique et des recommandations sincères.",
+                // Modal "Autre format"
+                modalOtherTitle: 'Un projet <em>différent</em> ?',
+                modalOtherSubtitle: "Journée complète, format hybride, activation multi-marques... Décrivez-nous votre vision, nous créons l'expérience qui vous ressemble.",
+                modalNamePlaceholder: 'Votre nom',
+                modalEmailPlaceholder: 'Votre email',
+                modalAgencyPlaceholder: 'Votre agence / marque',
+                modalProjectPlaceholder: 'Décrivez votre projet idéal...',
+                modalSubmitLabel: 'Envoyer ma demande',
+                modalSubmitRedirectLabel: '✓ Redirection vers Calendly...',
             },
             en: {
                 navAbout: 'The Villa',
@@ -4037,6 +4048,15 @@
                 vizDescExperience: 'Exclusive lunch or dinner on the panoramic terrace. Champagne welcome facing the sea, refined meal by the pool. Premium networking, event content, memorable moments.',
                 vizDescDiner: 'Exclusive dinner on the terrace facing the Mediterranean. Champagne welcome by the pool, a beautifully set table under the stars. Your talents and VIP guests in an intimate setting. Every moment becomes content: arrival, cocktail, table, conversations. The format that turns a meal into an influence campaign.',
                 vizDescMasterclass: 'Beauty or lifestyle workshop on the terrace with an expert from your brand. Your talents learn, ask questions and create educational content. An intimate format that generates authentic engagement and genuine recommendations.',
+                // Modal "Autre format"
+                modalOtherTitle: 'A <em>different</em> project?',
+                modalOtherSubtitle: 'Full day, hybrid format, multi-brand activation… Tell us your vision and we’ll craft the experience that fits you.',
+                modalNamePlaceholder: 'Your name',
+                modalEmailPlaceholder: 'Your email',
+                modalAgencyPlaceholder: 'Your agency / brand',
+                modalProjectPlaceholder: 'Describe your ideal project...',
+                modalSubmitLabel: 'Send my request',
+                modalSubmitRedirectLabel: '✓ Redirecting to Calendly...',
             }
         };
 
