@@ -2642,7 +2642,7 @@
                 <div class="format-details">
                     <div class="format-info">
                         <span id="format1DurationLabel" data-i18n="format1DurationLabel">Durée</span>
-                        <span id="format1Duration" data-i18n="format1Duration">3-4 heures</span>
+                        <span id="format1Duration" data-i18n="format1Duration">Sur mesure</span>
                     </div>
                     <div class="format-info">
                         <span id="format1AccessLabel" data-i18n="format1AccessLabel">Accès</span>
@@ -3482,6 +3482,9 @@
         let timelineInterval;
 
         function updateViz() {
+            const lang = document.documentElement.lang || 'fr';
+            const t = (typeof translations !== 'undefined' && translations[lang]) ? translations[lang] : (translations && translations.fr ? translations.fr : null);
+
             const bg = document.getElementById('vizBackground');
             const img = bg.querySelector('img');
             const desc = document.getElementById('vizDescription');
@@ -3493,7 +3496,30 @@
             bg.className = 'viz-background ' + vizFormat;
             
             // Update description with typing effect
-            const newText = vizData.descriptions[vizFormat];
+            let newText = '';
+            if (t) {
+                switch (vizFormat) {
+                    case 'glamroom':
+                        newText = t.vizDescGlam;
+                        break;
+                    case 'content':
+                        newText = t.vizDescContent;
+                        break;
+                    case 'experience':
+                        newText = t.vizDescExperience;
+                        break;
+                    case 'diner':
+                        newText = t.vizDescDiner;
+                        break;
+                    case 'masterclass':
+                        newText = t.vizDescMasterclass;
+                        break;
+                    default:
+                        newText = vizData.descriptions[vizFormat] || '';
+                }
+            } else {
+                newText = vizData.descriptions[vizFormat] || '';
+            }
             desc.style.opacity = '0';
             setTimeout(() => {
                 desc.textContent = newText;
@@ -3505,6 +3531,9 @@
         }
 
         function updateTimeline() {
+            const lang = document.documentElement.lang || 'fr';
+            const t = (typeof translations !== 'undefined' && translations[lang]) ? translations[lang] : (translations && translations.fr ? translations.fr : null);
+
             const timeline = document.getElementById('vizTimeline');
             const pointsContainer = timeline.querySelector('.timeline-points');
             const progress = timeline.querySelector('.timeline-progress');
@@ -3515,12 +3544,24 @@
             
             // Create new points
             points.forEach((point, index) => {
+                let label = point.label;
+                if (t && vizFormat === 'glamroom') {
+                    const glamLabels = [
+                        t.vizTimeGlamArrivee,
+                        t.vizTimeGlamCoiffure,
+                        t.vizTimeGlamMakeup,
+                        t.vizTimeGlamGrwm,
+                        t.vizTimeGlamDepart
+                    ];
+                    label = glamLabels[index] || point.label;
+                }
+
                 const pointEl = document.createElement('div');
                 pointEl.className = 'timeline-point' + (index === 0 ? ' active' : '');
                 pointEl.innerHTML = `
                     <span class="point-dot"></span>
                     <span class="point-time">${point.time}</span>
-                    <span class="point-label">${point.label}</span>
+                    <span class="point-label">${label}</span>
                 `;
                 pointsContainer.appendChild(pointEl);
             });
@@ -3674,7 +3715,7 @@
         });
 
         // ✨ LANG SWITCHER FR / EN (textes principaux)
-        const translations = {
+        var translations = {
             fr: {
                 navAbout: 'La Villa',
                 navFormats: 'Formats',
@@ -3719,7 +3760,7 @@
                 format1Name: 'Glam Room',
                 format1Desc: 'Session maquillage et coiffure avec nos talents, capturée en contenu photo et vidéo premium pour votre marque.',
                 format1DurationLabel: 'Durée',
-                format1Duration: '3-4 heures',
+                format1Duration: 'Sur mesure',
                 format1AccessLabel: 'Accès',
                 format1Access: 'Espace Glam dédié (intérieur)',
                 format2Name: 'Brand Experience',
@@ -3823,6 +3864,18 @@
                 talentFilterSport: 'Sport',
                 talentsCta: 'Découvrir tous nos talents →',
                 heroVideoLive: 'Villa en direct',
+                // Visualizer – timeline Glam Room
+                vizTimeGlamArrivee: 'ARRIVÉE',
+                vizTimeGlamCoiffure: 'COIFFURE', 
+                vizTimeGlamMakeup: 'MAKE-UP',
+                vizTimeGlamGrwm: 'GRWM',
+                vizTimeGlamDepart: 'DÉPART',
+                // Visualizer – descriptions
+                vizDescGlam: "Le format iconique. Vos talents se préparent à la villa avant la montée des marches ou une soirée. Coiffure, maquillage, styling — avec les produits de votre marque partenaire. Contenu GRWM authentique, la marque intégrée naturellement dans leurs stories et reels. Visibilité maximale garantie.",
+                vizDescContent: "Session shooting dans les plus beaux spots extérieurs de la villa. Piscine turquoise, terrasse vue mer, jardins méditerranéens. Votre équipe créative capture du contenu premium. Vos talents posent, filment, créent des TikTok. Résultat : une banque de contenus prêts à publier.",
+                vizDescExperience: "Déjeuner ou dîner exclusif sur la terrasse panoramique. Accueil champagne face à la mer, repas raffiné au bord de la piscine. Networking premium, contenus événementiels, souvenirs mémorables.",
+                vizDescDiner: "Dîner exclusif en terrasse face à la Méditerranée. Accueil champagne au bord de la piscine, table dressée sous les étoiles. Vos talents et invités VIP dans un cadre intimiste. Chaque moment est un contenu : arrivée, cocktail, table, conversations. Le format qui transforme un repas en campagne d'influence.",
+                vizDescMasterclass: "Workshop beauté ou lifestyle en terrasse avec un expert de votre marque. Vos talents apprennent, posent des questions, créent du contenu éducatif. Format intimiste qui génère de l'engagement authentique et des recommandations sincères.",
             },
             en: {
                 navAbout: 'The Villa',
@@ -3868,7 +3921,7 @@
                 format1Name: 'Glam Room',
                 format1Desc: 'Makeup and hair session with our talents, captured in premium photo and video content for your brand.',
                 format1DurationLabel: 'Duration',
-                format1Duration: '3–4 hours',
+                format1Duration: 'Custom',
                 format1AccessLabel: 'Access',
                 format1Access: 'Dedicated Glam space (indoor)',
                 format2Name: 'Brand Experience',
@@ -3972,6 +4025,18 @@
                 talentFilterSport: 'Sport',
                 talentsCta: 'Discover all our talents →',
                 heroVideoLive: 'Villa live',
+                // Visualizer – timeline Glam Room
+                vizTimeGlamArrivee: 'ARRIVAL',
+                vizTimeGlamCoiffure: 'HAIR', 
+                vizTimeGlamMakeup: 'MAKE-UP',
+                vizTimeGlamGrwm: 'GRWM',
+                vizTimeGlamDepart: 'DEPARTURE',
+                // Visualizer – descriptions
+                vizDescGlam: 'The iconic format. Your talents get ready at the villa before the red carpet or an evening event. Hair, makeup, styling — featuring your partner brand’s products. Authentic GRWM content with your brand naturally integrated into stories and reels. Maximum visibility guaranteed.',
+                vizDescContent: 'Shooting session in the villa’s most beautiful outdoor spots. Turquoise pool, sea-view terrace, Mediterranean gardens. Your creative team captures premium content. Your talents pose, film, create TikToks. The result: a bank of ready-to-publish assets.',
+                vizDescExperience: 'Exclusive lunch or dinner on the panoramic terrace. Champagne welcome facing the sea, refined meal by the pool. Premium networking, event content, memorable moments.',
+                vizDescDiner: 'Exclusive dinner on the terrace facing the Mediterranean. Champagne welcome by the pool, a beautifully set table under the stars. Your talents and VIP guests in an intimate setting. Every moment becomes content: arrival, cocktail, table, conversations. The format that turns a meal into an influence campaign.',
+                vizDescMasterclass: 'Beauty or lifestyle workshop on the terrace with an expert from your brand. Your talents learn, ask questions and create educational content. An intimate format that generates authentic engagement and genuine recommendations.',
             }
         };
 
@@ -4086,6 +4151,11 @@
             setText('talentFilterFamily', t.talentFilterFamily);
             setText('talentFilterSport', t.talentFilterSport);
             setText('talentsCta', t.talentsCta);
+
+            // Met à jour le visualizer si déjà affiché
+            if (typeof updateViz === 'function') {
+                updateViz();
+            }
 
             // Appliquer les traductions génériques via data-i18n / data-i18n-html
             document.querySelectorAll('[data-i18n]').forEach((el) => {
