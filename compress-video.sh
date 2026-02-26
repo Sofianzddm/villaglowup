@@ -12,7 +12,7 @@ if [[ ! -f "$INPUT" ]]; then
   exit 1
 fi
 
-echo "Compression de $INPUT -> $OUTPUT (web optimisé, ~5-15 Mo)…"
-ffmpeg -i "$INPUT" -c:v libx264 -crf 28 -preset slow -an -movflags +faststart -vf "scale=1920:-2" "$OUTPUT"
+echo "Compression de $INPUT -> $OUTPUT (crf 18, faststart)…"
+ffmpeg -i "$INPUT" -c:v libx264 -crf 18 -preset slow -an -movflags +faststart "$OUTPUT"
 echo "Terminé : $OUTPUT"
 ls -lh "$OUTPUT"

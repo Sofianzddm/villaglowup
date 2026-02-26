@@ -3273,12 +3273,17 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('loaded');
-            }, 2200);
-        });
+        // Preloader : on n'attend pas la vidéo (évite page blanche si fichier lourd)
+        function hidePreloader() {
+            const el = document.getElementById('preloader');
+            if (el) el.classList.add('loaded');
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(hidePreloader, 2200));
+        } else {
+            setTimeout(hidePreloader, 2200);
+        }
+        setTimeout(hidePreloader, 4500); // au cas où, afficher la page après 4,5 s max
 
         // Custom Cursor
         const cursor = document.querySelector('.cursor');
