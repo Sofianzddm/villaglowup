@@ -1,0 +1,4 @@
+# Récupérer les fichiers Git LFS (ex. villa-video.mp4) avant la publication
+[build]
+  command = "git lfs pull"
+  publish = "."
