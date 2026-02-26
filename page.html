@@ -402,7 +402,7 @@
             animation: fadeUp 1s ease 1.1s forwards;
         }
 
-        /* --- Colonne droite : image (flush bord droit / haut / bas) --- */
+        /* --- Colonne droite : vidéo plein format (flush bord droit / haut / bas) --- */
         .hero-image {
             position: relative;
             overflow: hidden;
@@ -412,50 +412,19 @@
             margin: 0;
         }
 
-        .hero-image {
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeIn 1.2s ease 0.3s forwards;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at top left, #f8f4ec 0%, #efe0c8 35%, #e0c49e 70%, #d1b38b 100%);
-        }
-
-        .hero-video-frame {
-            width: 78%;
-            max-width: 720px;
-            aspect-ratio: 16 / 9;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            position: relative;
-            z-index: 3;
-            background: #000;
-        }
-
-        .hero-video-frame video {
+        .hero-image video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        /* Dégradé sombre en bas pour lisibilité du texte */
+        /* Dégradé blanc sur le bord gauche pour fusionner avec le texte */
         .hero-image::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                90deg,
-                var(--white, #ffffff) 0%,
-                rgba(255, 255, 255, 0.9) 8%,
-                rgba(255, 255, 255, 0.6) 18%,
-                rgba(255, 255, 255, 0.0) 35%
-            );
+            background: linear-gradient(90deg, var(--white, #ffffff) 0%, rgba(255,255,255,0.8) 5%, rgba(255,255,255,0) 25%);
             z-index: 2;
         }
 
@@ -2610,11 +2579,9 @@
         </div>
 
         <div class="hero-image">
-            <div class="hero-video-frame">
-                <video autoplay muted loop playsinline>
-                    <source src="villa-video.mp4" type="video/mp4">
-                </video>
-            </div>
+            <video autoplay muted loop playsinline>
+                <source src="villa-video.mp4" type="video/mp4">
+            </video>
         </div>
     </section>
 
@@ -3341,9 +3308,9 @@
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
             document.querySelector('header').classList.toggle('scrolled', scrolled > 80);
-            const heroVideoFrame = document.querySelector('.hero-video-frame');
-            if (heroVideoFrame && scrolled < window.innerHeight) {
-                heroVideoFrame.style.transform = `translateY(${scrolled * 0.15}px)`;
+            const heroVideo = document.querySelector('.hero-image video');
+            if (heroVideo && scrolled < window.innerHeight) {
+                heroVideo.style.transform = `translateY(${scrolled * 0.15}px)`;
             }
         });
 
