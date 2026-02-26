@@ -320,50 +320,6 @@
         }
 
         /* ===========================
-           VILLA SLIDER — BANDEAU TOP
-           =========================== */
-
-        .villa-slider {
-            position: relative;
-            width: 100vw;
-            height: 350px;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .villa-slider-inner {
-            position: absolute;
-            inset: 0;
-        }
-
-        .villa-slider img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .villa-slider img.is-active {
-            opacity: 1;
-        }
-
-        .villa-slider::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 120px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
-            pointer-events: none;
-        }
-
-        /* ===========================
            HERO — GRID 2 COLONNES
            =========================== */
 
@@ -2297,9 +2253,6 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .villa-slider {
-                height: 260px;
-            }
             nav { display: none; }
             .menu-burger { display: flex; }
             .menu-burger span { background: var(--white); }
@@ -2400,10 +2353,6 @@
 
         @media (max-width: 640px) {
             .cursor { display: none; }
-
-            .villa-slider {
-                height: 200px;
-            }
             
             header { padding: 1rem 5%; }
             header.scrolled { padding: 0.8rem 5%; }
@@ -2611,20 +2560,6 @@
         <a href="#avantages" id="navMobileAvantages">Avantages</a>
         <a href="https://calendly.com/szeddam-glowupagence-villacannes2026" target="_blank" rel="noopener" class="mobile-menu-cta">Réserver un call</a>
     </div>
-
-    <!-- Villa Slider (bandeau au-dessus du hero) -->
-    <section class="villa-slider" aria-hidden="true">
-        <div class="villa-slider-inner">
-            <img src="Pool-bynight.png" alt="" loading="eager" fetchpriority="high">
-            <img src="villa-pool-view.png" alt="" loading="lazy">
-            <img src="villa-hero.png" alt="" loading="lazy">
-            <img src="villa-night-pool.png" alt="" loading="lazy">
-            <img src="villa-lounge.png" alt="" loading="lazy">
-            <img src="villa-panorama.png" alt="" loading="lazy">
-            <img src="villa-night-screen.png" alt="" loading="lazy">
-            <img src="salon_night.png" alt="" loading="lazy">
-        </div>
-    </section>
 
     <!-- Hero -->
     <section class="hero" id="hero">
@@ -3388,28 +3323,6 @@
                 heroImage.style.transform = `translateY(${scrolled * 0.15}px)`;
             }
         });
-
-        // Villa slider crossfade
-        (function() {
-            const slider = document.querySelector('.villa-slider');
-            if (!slider) return;
-
-            const slides = Array.from(slider.querySelectorAll('img'));
-            if (slides.length <= 1) return;
-
-            let currentIndex = 0;
-            const interval = 4000; // 3s visible + ~1s fade
-
-            slides[0].classList.add('is-active');
-
-            setInterval(() => {
-                const current = slides[currentIndex];
-                currentIndex = (currentIndex + 1) % slides.length;
-                const next = slides[currentIndex];
-                current.classList.remove('is-active');
-                next.classList.add('is-active');
-            }, interval);
-        })();
 
         // Mobile Menu
         const menuBurger = document.getElementById('menuBurger');
