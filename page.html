@@ -412,11 +412,35 @@
             margin: 0;
         }
 
-        .hero-image img {
+        .hero-image {
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1.2s ease 0.3s forwards;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top left, #f8f4ec 0%, #efe0c8 35%, #e0c49e 70%, #d1b38b 100%);
+        }
+
+        .hero-video-frame {
+            width: 78%;
+            max-width: 720px;
+            aspect-ratio: 16 / 9;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 3;
+            background: #000;
+        }
+
+        .hero-video-frame video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 60%;
             display: block;
         }
 
@@ -426,11 +450,11 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(
-                to top,
-                rgba(0, 0, 0, 0.45) 0%,
-                rgba(0, 0, 0, 0.25) 25%,
-                rgba(0, 0, 0, 0.05) 55%,
-                rgba(0, 0, 0, 0) 100%
+                90deg,
+                var(--white, #ffffff) 0%,
+                rgba(255, 255, 255, 0.9) 8%,
+                rgba(255, 255, 255, 0.6) 18%,
+                rgba(255, 255, 255, 0.0) 35%
             );
             z-index: 2;
         }
@@ -2586,12 +2610,11 @@
         </div>
 
         <div class="hero-image">
-            <img
-                src="Pool-bynight.png"
-                alt="Piscine de la Villa Glow Up au coucher du soleil avec lettres lumineuses GLOW UP et reflet dans l'eau, Cannes"
-                loading="eager"
-                fetchpriority="high"
-            >
+            <div class="hero-video-frame">
+                <video autoplay muted loop playsinline>
+                    <source src="villa-video.mp4" type="video/mp4">
+                </video>
+            </div>
         </div>
     </section>
 
@@ -3318,9 +3341,9 @@
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
             document.querySelector('header').classList.toggle('scrolled', scrolled > 80);
-            const heroImage = document.querySelector('.hero-image img');
-            if (heroImage && scrolled < window.innerHeight) {
-                heroImage.style.transform = `translateY(${scrolled * 0.15}px)`;
+            const heroVideoFrame = document.querySelector('.hero-video-frame');
+            if (heroVideoFrame && scrolled < window.innerHeight) {
+                heroVideoFrame.style.transform = `translateY(${scrolled * 0.15}px)`;
             }
         });
 
