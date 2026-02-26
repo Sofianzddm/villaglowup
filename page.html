@@ -116,21 +116,9 @@
             to { width: 100%; }
         }
 
-        /* Custom Cursor */
+        /* Custom Cursor (désactivé) */
         .cursor {
-            width: 12px;
-            height: 12px;
-            background: var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transition: transform 0.2s ease;
-        }
-
-        .cursor.active {
-            transform: scale(3);
+            display: none;
         }
 
         /* Navigation — fond blanc, texte noir (toujours visible) */
@@ -428,7 +416,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: center 60%;
             display: block;
         }
 
